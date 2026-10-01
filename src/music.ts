@@ -9,7 +9,6 @@ export interface Track {
 export interface MusicCollection {
   id: CollectionId
   title: string
-  eyebrow: string
   description: string
   artwork?: string
   tracks: Track[]
@@ -30,7 +29,6 @@ export const collections: MusicCollection[] = [
   {
     id: 'stiff-drink',
     title: 'Stiff Drink',
-    eyebrow: 'Album 01',
     description: 'The first record. Thirteen songs, no hurry.',
     artwork: '/media/artwork/stiff-drink.jpg',
     tracks: [
@@ -52,7 +50,6 @@ export const collections: MusicCollection[] = [
   {
     id: 'great-escape',
     title: 'The Great Escape',
-    eyebrow: 'Album 02',
     description: 'A road record about getting out and getting home.',
     artwork: '/media/artwork/great-escape.jpg',
     tracks: [
@@ -76,7 +73,6 @@ export const collections: MusicCollection[] = [
   {
     id: 'workshop',
     title: 'Workshop',
-    eyebrow: 'Loose takes & side roads',
     description: 'Unfinished corners, odd ideas, and songs that found their own way.',
     tracks: [
       makeTrack('workshop', 'forbidden-fiddle', 'Forbidden Fiddle', 'forbidden-fiddle.mp3'),

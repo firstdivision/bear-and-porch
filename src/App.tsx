@@ -97,7 +97,6 @@ function App() {
               <article className="album-card" key={album.id}>
                 <div className={`album-art album-art-${index + 1}`}>
                   <img src={album.artwork} alt={`${album.title} album artwork`} />
-                  <span className="album-number">{album.eyebrow}</span>
                   <button
                     className="album-play"
                     type="button"
