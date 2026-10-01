@@ -1,18 +1,18 @@
 :root {
   font-family: 'Manrope', sans-serif;
-  color: #f1f1e9;
-  background: #11120f;
+  color: #f0e8dc;
+  background: #100e0c;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-optical-sizing: auto;
   font-weight: 400;
-  --ink: #11120f;
-  --paper: #f1f1e9;
-  --muted: #9b9d91;
-  --lime: #d5f36b;
-  --line: rgba(241, 241, 233, 0.13);
+  --ink: #100e0c;
+  --paper: #f0e8dc;
+  --muted: #a79b8d;
+  --tan: #c9a980;
+  --line: rgba(240, 232, 220, 0.13);
   --mono: 'DM Mono', monospace;
 }
 
@@ -31,7 +31,7 @@ body {
   margin: 0;
   padding-bottom: 102px;
   background:
-    radial-gradient(ellipse at 50% 23%, rgba(40, 45, 32, 0.23), transparent 48%),
+    radial-gradient(ellipse at 50% 23%, rgba(91, 66, 43, 0.16), transparent 48%),
     var(--ink);
 }
 
@@ -50,7 +50,7 @@ button {
 
 ::selection {
   color: var(--ink);
-  background: var(--lime);
+  background: var(--tan);
 }
 
 .skip-link {
@@ -61,7 +61,7 @@ button {
   padding: 12px 16px;
   transform: translateY(-150%);
   color: var(--ink);
-  background: var(--lime);
+  background: var(--tan);
 }
 
 .skip-link:focus {
@@ -94,9 +94,9 @@ button {
   width: 35px;
   height: 35px;
   place-items: center;
-  border: 1px solid rgba(213, 243, 107, 0.5);
+  border: 1px solid rgba(201, 169, 128, 0.5);
   border-radius: 50%;
-  color: var(--lime);
+  color: var(--tan);
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: -0.1em;
@@ -104,7 +104,7 @@ button {
 
 .wordmark-and,
 .footer-wordmark span {
-  color: var(--lime);
+  color: var(--tan);
 }
 
 .main-nav,
@@ -119,7 +119,7 @@ button {
 }
 
 .main-nav a {
-  color: #d3d4ca;
+  color: #ded3c4;
   font-size: 12px;
   transition: color 160ms ease;
 }
@@ -127,7 +127,7 @@ button {
 .main-nav a:hover,
 .header-links a:hover,
 .outro-links a:hover {
-  color: var(--lime);
+  color: var(--tan);
 }
 
 .header-links {
@@ -142,7 +142,7 @@ button {
 }
 
 .header-links a span {
-  color: var(--lime);
+  color: var(--tan);
 }
 
 .hero {
@@ -167,7 +167,7 @@ button {
   align-items: center;
   gap: 10px;
   margin: 0;
-  color: var(--lime);
+  color: var(--tan);
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 0.13em;
@@ -177,8 +177,8 @@ button {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--lime);
-  box-shadow: 0 0 14px rgba(213, 243, 107, 0.75);
+  background: var(--tan);
+  box-shadow: 0 0 14px rgba(201, 169, 128, 0.55);
 }
 
 .hero h1 {
@@ -190,7 +190,7 @@ button {
 }
 
 .hero h1 span {
-  color: var(--lime);
+  color: var(--tan);
 }
 
 .hero-bottom {
@@ -203,7 +203,7 @@ button {
 
 .hero-bottom p {
   margin: 0;
-  color: #a7a99d;
+  color: #b1a494;
   font-size: 12px;
   line-height: 1.9;
 }
@@ -214,9 +214,9 @@ button {
   height: 46px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid rgba(213, 243, 107, 0.65);
+  border: 1px solid rgba(201, 169, 128, 0.65);
   border-radius: 50%;
-  color: var(--lime);
+  color: var(--tan);
   font-size: 21px;
   transition: color 160ms ease, background 160ms ease, transform 160ms ease;
 }
@@ -224,7 +224,7 @@ button {
 .circle-link:hover {
   transform: translateY(3px);
   color: var(--ink);
-  background: var(--lime);
+  background: var(--tan);
 }
 
 .hero-art {
@@ -241,13 +241,13 @@ button {
   width: 81%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(213, 243, 107, 0.14);
+  border: 1px solid rgba(201, 169, 128, 0.14);
   border-radius: 50%;
 }
 
 .orbit-two {
   width: 100%;
-  border-color: rgba(213, 243, 107, 0.08);
+  border-color: rgba(201, 169, 128, 0.08);
 }
 
 .hero-sun {
@@ -257,8 +257,8 @@ button {
   width: 12%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--lime);
-  box-shadow: 0 0 55px rgba(213, 243, 107, 0.24);
+  background: var(--tan);
+  box-shadow: 0 0 55px rgba(201, 169, 128, 0.2);
 }
 
 .hero-record {
@@ -272,8 +272,8 @@ button {
   transform: translate(-50%, -50%) rotate(-17deg);
   border-radius: 50%;
   background:
-    repeating-radial-gradient(circle, #282a24 0 1px, #151612 2px 5px, #20221c 6px 7px),
-    #181a15;
+    repeating-radial-gradient(circle, #302820 0 1px, #17130f 2px 5px, #251d16 6px 7px),
+    #18130f;
   box-shadow: 22px 32px 70px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   animation: record-turn 36s linear infinite;
 }
@@ -302,7 +302,7 @@ button {
 
 .record-label span {
   margin: 0 2px;
-  color: #53652d;
+  color: #5d4933;
   font-size: 0.55em;
 }
 
@@ -315,10 +315,10 @@ button {
   height: 91px;
   place-content: center;
   transform: rotate(9deg);
-  border: 1px solid rgba(17, 18, 15, 0.4);
+  border: 1px solid rgba(16, 14, 12, 0.4);
   border-radius: 50%;
   color: var(--ink);
-  background: #e7a86a;
+  background: #b98e69;
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 0.02em;
@@ -330,7 +330,7 @@ button {
   position: absolute;
   right: 1%;
   bottom: 8%;
-  color: #77796e;
+  color: #978979;
   font-family: var(--mono);
   font-size: 8px;
   letter-spacing: 0.08em;
@@ -343,21 +343,21 @@ button {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #717369;
+  color: #8c7e6f;
   font-family: var(--mono);
   font-size: 8px;
   letter-spacing: 0.1em;
 }
 
 .hero-index > span:first-child {
-  color: var(--lime);
+  color: var(--tan);
 }
 
 .index-line {
   width: 45px;
   height: 1px;
   margin-left: 8px;
-  background: #505247;
+  background: #665b4e;
 }
 
 .section-wrap {
@@ -381,7 +381,7 @@ button {
   width: 46px;
   height: 1px;
   margin-left: 4px;
-  background: rgba(213, 243, 107, 0.54);
+  background: rgba(201, 169, 128, 0.54);
 }
 
 .section-heading h2,
@@ -394,7 +394,7 @@ button {
 }
 
 .heading-period {
-  color: var(--lime);
+  color: var(--tan);
 }
 
 .section-aside {
@@ -413,7 +413,7 @@ button {
 .album-art {
   position: relative;
   overflow: hidden;
-  background: #282a22;
+  background: #28211a;
 }
 
 .album-art::after {
@@ -452,7 +452,7 @@ button {
   padding: 7px 9px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   color: #fff;
-  background: rgba(17, 18, 15, 0.45);
+  background: rgba(16, 14, 12, 0.58);
   font-family: var(--mono);
   font-size: 8px;
   letter-spacing: 0.09em;
@@ -471,7 +471,7 @@ button {
   border: 0;
   border-radius: 50%;
   color: var(--ink);
-  background: var(--lime);
+  background: var(--tan);
   cursor: pointer;
   font-size: 13px;
   transition: transform 160ms ease, background 160ms ease;
@@ -479,7 +479,7 @@ button {
 
 .album-play:hover {
   transform: scale(1.08);
-  background: #e4ff86;
+  background: #ddc5a3;
 }
 
 .album-play span {
@@ -512,7 +512,7 @@ button {
 
 .track-count {
   margin-top: 6px;
-  color: #76786e;
+  color: #948675;
   font-family: var(--mono);
   font-size: 8px;
   letter-spacing: 0.09em;
@@ -526,7 +526,7 @@ button {
 }
 
 .track-row {
-  border-top: 1px solid rgba(241, 241, 233, 0.09);
+  border-top: 1px solid rgba(240, 232, 220, 0.1);
 }
 
 .track-button {
@@ -537,7 +537,7 @@ button {
   align-items: center;
   padding: 0;
   border: 0;
-  color: #d8d9d0;
+  color: #ded3c4;
   background: transparent;
   cursor: pointer;
   text-align: left;
@@ -546,19 +546,19 @@ button {
 
 .track-button:hover,
 .track-row.is-current .track-button {
-  color: var(--lime);
+  color: var(--tan);
 }
 
 .track-number,
 .track-action {
-  color: #74766c;
+  color: #948675;
   font-family: var(--mono);
   font-size: 9px;
 }
 
 .track-row.is-current .track-number,
 .track-row.is-current .track-action {
-  color: var(--lime);
+  color: var(--tan);
 }
 
 .track-title {
@@ -589,8 +589,8 @@ button {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   background:
-    radial-gradient(ellipse at 7% 86%, rgba(213, 243, 107, 0.065), transparent 35%),
-    #151611;
+    radial-gradient(ellipse at 7% 86%, rgba(201, 169, 128, 0.065), transparent 35%),
+    #17130f;
 }
 
 .workshop h2 {
@@ -602,7 +602,7 @@ button {
 .workshop-description {
   max-width: 285px;
   margin: 26px 0 0;
-  color: #a7a99d;
+  color: #b1a494;
   font-size: 11px;
   line-height: 1.95;
 }
@@ -612,13 +612,13 @@ button {
   align-items: center;
   gap: 12px;
   margin-top: 53px;
-  color: #929488;
+  color: #aa9c8c;
   font-family: var(--mono);
   font-size: 9px;
 }
 
 .note-mark {
-  color: var(--lime);
+  color: var(--tan);
   font-size: 18px;
 }
 
@@ -630,8 +630,8 @@ button {
   display: flex;
   justify-content: space-between;
   padding-bottom: 14px;
-  border-bottom: 1px solid rgba(241, 241, 233, 0.22);
-  color: var(--lime);
+  border-bottom: 1px solid rgba(240, 232, 220, 0.22);
+  color: var(--tan);
   font-family: var(--mono);
   font-size: 8px;
   letter-spacing: 0.11em;
@@ -671,14 +671,14 @@ button {
 }
 
 .outro-links a {
-  color: #c3c5bb;
+  color: #d5c8b7;
   font-family: var(--mono);
   font-size: 9px;
   transition: color 160ms ease;
 }
 
 .outro-links a span {
-  color: var(--lime);
+  color: var(--tan);
 }
 
 .site-footer {
@@ -688,7 +688,7 @@ button {
   justify-content: space-between;
   padding: 0 6.2vw;
   border-top: 1px solid var(--line);
-  color: #77796e;
+  color: #978979;
   font-family: var(--mono);
   font-size: 8px;
 }
@@ -700,7 +700,7 @@ button {
 }
 
 .back-top {
-  color: #aaa9a0;
+  color: #b5a995;
 }
 
 .player-dock {
@@ -715,8 +715,8 @@ button {
   align-items: center;
   gap: 30px;
   padding: 12px 6.2vw;
-  border-top: 1px solid rgba(213, 243, 107, 0.19);
-  background: rgba(20, 21, 17, 0.96);
+  border-top: 1px solid rgba(201, 169, 128, 0.19);
+  background: rgba(20, 17, 14, 0.97);
   box-shadow: 0 -12px 50px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(20px);
 }
@@ -736,18 +736,18 @@ button {
   align-items: center;
   justify-content: center;
   gap: 2px;
-  border: 1px solid rgba(213, 243, 107, 0.25);
+  border: 1px solid rgba(201, 169, 128, 0.25);
   border-radius: 50%;
 }
 
 .playing-indicator i {
   width: 2px;
   height: 5px;
-  background: #72766a;
+  background: #877867;
 }
 
 .playing-indicator.is-active i {
-  background: var(--lime);
+  background: var(--tan);
   animation: equalize 850ms ease-in-out infinite alternate;
 }
 
@@ -767,7 +767,7 @@ button {
 
 .player-label,
 .player-status {
-  color: #85877d;
+  color: #a19484;
   font-family: var(--mono);
   font-size: 7px;
   letter-spacing: 0.1em;
@@ -775,7 +775,7 @@ button {
 
 .player-title {
   overflow: hidden;
-  color: #e4e5dc;
+  color: #eee4d6;
   font-size: 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -797,7 +797,7 @@ button {
 .skip-button {
   padding: 8px 4px;
   border: 0;
-  color: var(--lime);
+  color: var(--tan);
   background: transparent;
   cursor: pointer;
   font-size: 10px;
@@ -805,7 +805,7 @@ button {
 }
 
 .skip-button:disabled {
-  color: #686a60;
+  color: #817464;
   cursor: default;
 }
 
@@ -824,8 +824,8 @@ button {
   height: 5px;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: var(--lime);
-  box-shadow: 0 0 8px rgba(213, 243, 107, 0.6);
+  background: var(--tan);
+  box-shadow: 0 0 8px rgba(201, 169, 128, 0.6);
 }
 
 @keyframes record-turn {
