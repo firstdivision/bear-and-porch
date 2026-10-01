@@ -565,6 +565,32 @@ button {
   opacity: 1;
 }
 
+.track-lyrics {
+  padding: 0 0 12px 32px;
+  color: #b1a494;
+  font-size: 9px;
+}
+
+.track-lyrics summary {
+  width: fit-content;
+  color: #c9a980;
+  cursor: pointer;
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+}
+
+.track-lyrics summary:hover {
+  color: #ddc5a3;
+}
+
+.track-lyrics-text {
+  margin: 12px 12px 4px 0;
+  color: #d5c8b7;
+  font-size: 11px;
+  line-height: 1.85;
+  white-space: pre-line;
+}
+
 .workshop {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);

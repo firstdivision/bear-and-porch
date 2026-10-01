@@ -233,6 +233,12 @@ function TrackList({ collectionId, tracks, activeTrack, onPlay }: TrackListProps
               <span className="track-title">{track.title}</span>
               <span className="track-action" aria-hidden="true">{isActive ? '♫' : '＋'}</span>
             </button>
+            {track.lyrics && (
+              <details className="track-lyrics">
+                <summary>Read lyrics</summary>
+                <p className="track-lyrics-text">{track.lyrics}</p>
+              </details>
+            )}
           </li>
         )
       })}

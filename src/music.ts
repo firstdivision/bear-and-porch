@@ -1,9 +1,12 @@
+import { lyricsByTrackId } from './lyrics'
+
 export type CollectionId = 'stiff-drink' | 'great-escape' | 'workshop'
 
 export interface Track {
   id: string
   title: string
   src: string
+  lyrics?: string
 }
 
 export interface MusicCollection {
@@ -19,11 +22,16 @@ const makeTrack = (
   id: string,
   title: string,
   file: string,
-): Track => ({
-  id: `${collection}:${id}`,
-  title,
-  src: `/media/${collection}/${file}`,
-})
+): Track => {
+  const trackId = `${collection}:${id}`
+
+  return {
+    id: trackId,
+    title,
+    src: `/media/${collection}/${file}`,
+    lyrics: lyricsByTrackId[trackId],
+  }
+}
 
 export const collections: MusicCollection[] = [
   {
