@@ -342,20 +342,13 @@ a {
 .spectrum i {
   width: 2px;
   flex: 0 0 2px;
-  height: var(--bar);
+  height: var(--bar, 8%);
   min-height: 3px;
   background: linear-gradient(0deg, #795d40, #c9a980 72%, #e6d5bb);
   opacity: 0.7;
   transform-origin: bottom;
+  transition: height 75ms linear;
 }
-
-.spectrum.is-playing i {
-  animation: spectrum-dance 600ms ease-in-out infinite alternate;
-  animation-delay: calc(var(--i, 0) * -31ms);
-}
-
-.spectrum.is-playing i:nth-child(3n) { animation-duration: 460ms; }
-.spectrum.is-playing i:nth-child(4n) { animation-duration: 730ms; }
 
 .readout-clock {
   min-width: 97px;

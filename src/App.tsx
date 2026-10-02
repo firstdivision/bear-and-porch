@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { collections, type CollectionId, type Track } from './music'
 
 const spotifyUrl = 'https://open.spotify.com/artist/5N4ZHyQxKfgmb8HnYgNFB2'
@@ -11,6 +11,10 @@ const formatTime = (seconds: number) => {
 
 function App() {
   const audioRef = useRef<HTMLAudioElement>(null)
+  const audioContextRef = useRef<AudioContext | null>(null)
+  const analyserRef = useRef<AnalyserNode | null>(null)
+  const audioSourceRef = useRef<MediaElementAudioSourceNode | null>(null)
+  const spectrumRef = useRef<HTMLDivElement>(null)
   const [selectedCollectionId, setSelectedCollectionId] = useState<CollectionId>('stiff-drink')
   const [playlist, setPlaylist] = useState<Track[]>([])
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null)
@@ -30,11 +34,76 @@ function App() {
     ? playlist.findIndex(({ id }) => id === currentTrack.id)
     : -1
 
+  const prepareAudioAnalyser = () => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    try {
+      if (!audioContextRef.current) {
+        const context = new AudioContext()
+        const analyser = context.createAnalyser()
+        analyser.fftSize = 2048
+        analyser.smoothingTimeConstant = 0.82
+
+        const source = context.createMediaElementSource(audio)
+        source.connect(analyser)
+        analyser.connect(context.destination)
+
+        audioContextRef.current = context
+        analyserRef.current = analyser
+        audioSourceRef.current = source
+      }
+
+      if (audioContextRef.current.state === 'suspended') {
+        void audioContextRef.current.resume().catch((error: unknown) => {
+          console.error('The audio visualizer could not resume.', error)
+          setPlaybackError('Live EQ unavailable; audio playback can continue.')
+        })
+      }
+    } catch (error) {
+      console.error('The audio visualizer could not be initialized.', error)
+      setPlaybackError('Live EQ unavailable; audio playback can continue.')
+    }
+  }
+
+  useEffect(() => {
+    const analyser = analyserRef.current
+    const spectrum = spectrumRef.current
+    if (!isPlaying || !analyser || !spectrum) return
+
+    const frequencyData = new Uint8Array(analyser.frequencyBinCount)
+    const bars = Array.from(spectrum.children)
+    let animationFrame = 0
+
+    const updateSpectrum = () => {
+      analyser.getByteFrequencyData(frequencyData)
+      bars.forEach((bar, index) => {
+        const start = Math.floor((index / bars.length) ** 2 * frequencyData.length)
+        const end = Math.max(
+          start + 1,
+          Math.floor(((index + 1) / bars.length) ** 2 * frequencyData.length),
+        )
+        let energy = 0
+        for (let bin = start; bin < end; bin += 1) {
+          energy += frequencyData[bin] ** 2
+        }
+        const level = Math.sqrt(energy / (end - start)) / 255
+        const height = Math.max(5, Math.round(level * 100))
+        bar instanceof HTMLElement && bar.style.setProperty('--bar', `${height}%`)
+      })
+      animationFrame = window.requestAnimationFrame(updateSpectrum)
+    }
+
+    animationFrame = window.requestAnimationFrame(updateSpectrum)
+    return () => window.cancelAnimationFrame(animationFrame)
+  }, [isPlaying])
+
   useEffect(() => {
     const audio = audioRef.current
     if (!audio || !currentTrack || !shouldPlay) return
 
     setShouldPlay(false)
+    prepareAudioAnalyser()
     audio.currentTime = 0
     void audio.play().catch((error: unknown) => {
       console.error('Audio playback could not start.', error)
@@ -54,6 +123,7 @@ function App() {
   const playTrack = (track: Track) => {
     addTrackToPlaylist(track)
     setPlaybackError(null)
+    prepareAudioAnalyser()
     setCurrentTrack(track)
     setShouldPlay(true)
     setCurrentTime(0)
@@ -65,6 +135,7 @@ function App() {
     setSelectedCollectionId(collectionId)
     setPlaylist(collection.tracks)
     setPlaybackError(null)
+    prepareAudioAnalyser()
     setCurrentTrack(collection.tracks[0] ?? null)
     setShouldPlay(Boolean(collection.tracks[0]))
     setCurrentTime(0)
@@ -78,6 +149,7 @@ function App() {
       return
     }
     setPlaybackError(null)
+    prepareAudioAnalyser()
     setCurrentTrack(nextTrack)
     setShouldPlay(true)
     setCurrentTime(0)
@@ -108,6 +180,7 @@ function App() {
     }
     if (!currentTrack) return
     setPlaybackError(null)
+    prepareAudioAnalyser()
     void audio.play().catch((error: unknown) => {
       console.error('Audio playback could not start.', error)
       setPlaybackError('Could not start playback. Try again.')
@@ -188,8 +261,13 @@ function App() {
               </button>
             )}
           </div>
-          <div className={`spectrum${isPlaying ? ' is-playing' : ''}`} aria-label={isPlaying ? 'Audio playing' : 'Audio paused'}>
-            {Array.from({ length: 64 }, (_, index) => <i key={index} style={{ '--bar': `${18 + ((index * 17) % 73)}%` } as CSSProperties} />)}
+          <div
+            className={`spectrum${isPlaying ? ' is-playing' : ''}`}
+            ref={spectrumRef}
+            role="img"
+            aria-label="Live audio frequency visualizer"
+          >
+            {Array.from({ length: 64 }, (_, index) => <i key={index} />)}
           </div>
           <div className="readout-clock">{formatTime(currentTime)} <span>/</span> {formatTime(duration)}</div>
         </div>

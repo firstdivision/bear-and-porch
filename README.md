@@ -1,6 +1,6 @@
 # Bear and Porch
 
-A responsive React and TypeScript music site built with Vite, styled as a dark, Winamp-inspired player. Choose an album or Workshop collection, add individual tracks or a full collection to the playlist, and use the fixed player dock for playback. Available lyrics from the legacy album and Workshop pages are shown in a slide-out drawer for the current track.
+A responsive React and TypeScript music site built with Vite, styled as a dark, Winamp-inspired player. Choose an album or Workshop collection, add individual tracks or a full collection to the playlist, and use the fixed player dock for playback. The EQ bars visualize the playing track's live frequency data with the browser's Web Audio API. Available lyrics from the legacy album and Workshop pages are shown in a slide-out drawer for the current track.
 
 Album and Workshop audio lives in `public/media/`; track titles, paths, and lyrics are maintained in `src/music.ts` and `src/lyrics.ts`.
 
