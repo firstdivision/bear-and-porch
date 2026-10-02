@@ -293,22 +293,27 @@ function App() {
               <span className="artist-avatar" aria-hidden="true">B<span>&</span>P</span>
               <span className="artist-copy"><strong>Bear and Porch</strong><small>3 collections</small></span>
             </button>
-            <div className="collection-heading"><span>COLLECTIONS</span><span>03</span></div>
-            <nav className="collection-nav" aria-label="Bear and Porch collections">
-              {collections.map((collection, index) => (
-                <button
-                  className={`collection-option${selectedCollectionId === collection.id ? ' is-selected' : ''}`}
-                  type="button"
-                  key={collection.id}
-                  aria-pressed={selectedCollectionId === collection.id}
-                  onClick={() => setSelectedCollectionId(collection.id)}
-                >
-                  <span className="collection-glyph" aria-hidden="true">{index === 2 ? '✳' : '▤'}</span>
-                  <span className="collection-copy"><strong>{collection.title}</strong><small>{String(collection.tracks.length).padStart(2, '0')} tracks</small></span>
-                  <span className="collection-arrow" aria-hidden="true">›</span>
-                </button>
-              ))}
-            </nav>
+            <div className="collection-heading">
+              <span>COLLECTIONS</span>
+              <span className="collection-count">03</span>
+              <span className="collection-swipe-hint" aria-hidden="true">SWIPE TO EXPLORE <span>→</span></span>
+            </div>
+            <div className="collection-rail">
+              <nav className="collection-nav" aria-label="Bear and Porch collections">
+                {collections.map((collection, index) => (
+                  <button
+                    className={`collection-option${selectedCollectionId === collection.id ? ' is-selected' : ''}`}
+                    type="button"
+                    key={collection.id}
+                    aria-pressed={selectedCollectionId === collection.id}
+                    onClick={() => setSelectedCollectionId(collection.id)}
+                  >
+                    <span className="collection-glyph" aria-hidden="true">{index === 2 ? '✳' : '▤'}</span>
+                    <span className="collection-copy"><strong>{collection.title}</strong><small>{String(collection.tracks.length).padStart(2, '0')} tracks</small></span>
+                  </button>
+                ))}
+              </nav>
+            </div>
             <div className="library-footer">
               <span className="tiny-led" />
               <span>LOCAL COLLECTION</span>
