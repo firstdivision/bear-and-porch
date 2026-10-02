@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { collections, type CollectionId, type Track } from './music'
+import { collections, type CollectionId, type MusicCollection, type Track } from './music'
 
 const spotifyUrl = 'https://open.spotify.com/artist/5N4ZHyQxKfgmb8HnYgNFB2'
 const youtubeUrl = 'https://www.youtube.com/channel/UCyh3zc-I0flxBVG5HByjz2A'
@@ -11,6 +11,32 @@ const formatTime = (seconds: number) => {
   if (!Number.isFinite(seconds)) return '0:00'
   const minutes = Math.floor(seconds / 60)
   return `${minutes}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`
+}
+
+const updateMediaMetadata = (
+  track: Track | null,
+  collection: MusicCollection | undefined,
+) => {
+  if (!('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return
+
+  const artworkName = collection?.artwork?.split('/').pop()?.replace(/\.[^.]+$/, '')
+  navigator.mediaSession.metadata = track
+    ? new MediaMetadata({
+        title: track.title,
+        artist: 'Bear and Porch',
+        album: collection?.title ?? 'Bear and Porch',
+        artwork: artworkName
+          ? [512, 96].map((size) => ({
+              src: new URL(
+                `/media/artwork/lockscreen/${artworkName}-${size}.jpg`,
+                window.location.origin,
+              ).href,
+              sizes: `${size}x${size}`,
+              type: 'image/jpeg',
+            }))
+          : [],
+      })
+    : null
 }
 
 function App() {
@@ -269,24 +295,7 @@ function App() {
     if (!('mediaSession' in navigator)) return
 
     const mediaSession = navigator.mediaSession
-    mediaSession.metadata = currentTrack && typeof MediaMetadata !== 'undefined'
-      ? new MediaMetadata({
-          title: currentTrack.title,
-          artist: 'Bear and Porch',
-          album: currentCollection?.title ?? 'Bear and Porch',
-          artwork: currentCollection?.artwork
-            ? [{
-                src: new URL(currentCollection.artwork, window.location.origin).href,
-                sizes: currentCollection.id === 'stiff-drink'
-                  ? '700x377'
-                  : currentCollection.id === 'blue'
-                    ? '295x293'
-                    : '700x400',
-                type: 'image/jpeg',
-              }]
-            : [],
-        })
-      : null
+    updateMediaMetadata(currentTrack, currentCollection)
     mediaSession.playbackState = isPlaying
       ? 'playing'
       : currentTrack
@@ -591,7 +600,10 @@ function App() {
           preload="none"
           src={currentTrack?.src}
           onEnded={playNext}
-          onPlay={() => setIsPlaying(true)}
+          onPlay={() => {
+            setIsPlaying(true)
+            updateMediaMetadata(currentTrack, currentCollection)
+          }}
           onPause={() => setIsPlaying(false)}
           onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
           onLoadedMetadata={(event) => setDuration(event.currentTarget.duration)}

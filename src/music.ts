@@ -93,6 +93,7 @@ export const collections: MusicCollection[] = [
     id: 'workshop',
     title: 'Workshop',
     description: 'Unfinished corners, odd ideas, and songs that found their own way.',
+    artwork: '/media/artwork/workshop.jpg',
     tracks: [
       makeTrack('workshop', 'forbidden-fiddle', 'Forbidden Fiddle', 'forbidden-fiddle.mp3'),
       makeTrack('workshop', 'roll-those-bones', 'Roll Those Bones', 'roll-those-bones.mp3'),
