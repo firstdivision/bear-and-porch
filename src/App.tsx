@@ -122,22 +122,32 @@ function App() {
     })
   }, [currentTrack, shouldPlay])
 
+  const startTrack = (track: Track) => {
+    setPlaybackError(null)
+    prepareAudioAnalyser()
+    setCurrentTrack(track)
+    setShouldPlay(true)
+    setCurrentTime(0)
+  }
+
   const addTracksToPlaylist = (tracks: Track[]) => {
+    const knownIds = new Set(playlist.map(({ id }) => id))
+    const tracksToAdd = tracks.filter(({ id }) => !knownIds.has(id))
+    if (tracksToAdd.length === 0) return
+
     setPlaylist((current) => {
-      const knownIds = new Set(current.map(({ id }) => id))
-      return [...current, ...tracks.filter(({ id }) => !knownIds.has(id))]
+      const currentIds = new Set(current.map(({ id }) => id))
+      return [...current, ...tracksToAdd.filter(({ id }) => !currentIds.has(id))]
     })
+
+    if (playlist.length === 0) startTrack(tracksToAdd[0])
   }
 
   const addTrackToPlaylist = (track: Track) => addTracksToPlaylist([track])
 
   const playTrack = (track: Track) => {
     addTrackToPlaylist(track)
-    setPlaybackError(null)
-    prepareAudioAnalyser()
-    setCurrentTrack(track)
-    setShouldPlay(true)
-    setCurrentTime(0)
+    startTrack(track)
   }
 
   const playCollection = (collectionId: CollectionId) => {
