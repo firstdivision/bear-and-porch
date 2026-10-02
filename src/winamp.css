@@ -161,18 +161,31 @@ a {
 
 .header-links {
   display: flex;
-  gap: 18px;
+  align-items: center;
+  gap: 9px;
 }
 
-.header-links a {
-  color: var(--muted);
-  font-size: 8px;
-  letter-spacing: 0.08em;
-  transition: color 150ms ease;
+.site-header .header-links a {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border: 1px solid rgba(193, 173, 139, 0.48);
+  color: #e1d1b3;
+  background: linear-gradient(180deg, rgba(193, 173, 139, 0.13), rgba(193, 173, 139, 0.045));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  white-space: nowrap;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
 }
 
-.header-links a:hover {
-  color: var(--tan);
+.site-header .header-links a:hover {
+  border-color: #dfc89d;
+  color: #fff3d8;
+  background: rgba(193, 173, 139, 0.2);
 }
 
 .player-shell {
@@ -1903,8 +1916,10 @@ a {
   }
 
   .site-header {
-    min-height: 57px;
+    min-height: 0;
+    flex-wrap: wrap;
     gap: 8px;
+    padding: 9px 0 8px;
   }
 
   .wordmark {
@@ -1930,7 +1945,16 @@ a {
   }
 
   .header-links {
-    display: none;
+    order: 2;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .site-header .header-links a {
+    min-height: 40px;
+    flex: 1 1 0;
+    padding: 0 8px;
+    font-size: 11px;
   }
 
   .player-shell {
