@@ -486,7 +486,7 @@ function App() {
                   return (
                     <li className={`library-track${isCurrent ? ' is-current' : ''}`} key={track.id}>
                       <span className="library-track-number">{isCurrent && isPlaying ? '♫' : String(index + 1).padStart(2, '0')}</span>
-                      <button className="library-track-title" type="button" onClick={() => playTrack(track)}>
+                      <button className="library-track-title" type="button" onClick={() => addTrackToPlaylist(track)}>
                         <strong>{track.title}</strong>
                         <small>{isCurrent ? 'NOW PLAYING' : 'BEAR AND PORCH'}</small>
                       </button>
