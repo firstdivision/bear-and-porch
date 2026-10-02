@@ -72,23 +72,34 @@ function App() {
     if (!isPlaying || !analyser || !spectrum) return
 
     const frequencyData = new Uint8Array(analyser.frequencyBinCount)
+    const binWidth = analyser.context.sampleRate / analyser.fftSize
+    const displayedBinCount = Math.min(
+      frequencyData.length,
+      Math.ceil(7500 / binWidth),
+    )
     const bars = Array.from(spectrum.children)
     let animationFrame = 0
 
     const updateSpectrum = () => {
       analyser.getByteFrequencyData(frequencyData)
       bars.forEach((bar, index) => {
-        const start = Math.floor((index / bars.length) ** 2 * frequencyData.length)
+        const start = Math.floor((index / bars.length) ** 2 * displayedBinCount)
         const end = Math.max(
           start + 1,
-          Math.floor(((index + 1) / bars.length) ** 2 * frequencyData.length),
+          Math.floor(((index + 1) / bars.length) ** 2 * displayedBinCount),
         )
         let energy = 0
         for (let bin = start; bin < end; bin += 1) {
           energy += frequencyData[bin] ** 2
         }
         const level = Math.sqrt(energy / (end - start)) / 255
-        const height = Math.max(5, Math.round(level * 100))
+        const bandPosition = index / (bars.length - 1)
+        const highFrequencyBoost = 1 + 1.4 * bandPosition ** 2
+        const perceivedLevel = level ** 0.72
+        const height = Math.max(
+          5,
+          Math.round(Math.min(1, perceivedLevel * highFrequencyBoost) * 100),
+        )
         bar instanceof HTMLElement && bar.style.setProperty('--bar', `${height}%`)
       })
       animationFrame = window.requestAnimationFrame(updateSpectrum)
