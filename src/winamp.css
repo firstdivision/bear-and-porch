@@ -369,7 +369,7 @@ a {
   min-width: 0;
   flex: 1 1 0;
   height: var(--bar, 8%);
-  min-height: 4px;
+  min-height: 0;
   background:
     repeating-linear-gradient(
       to top,
@@ -380,6 +380,17 @@ a {
   opacity: 0.88;
   transform-origin: bottom;
   transition: height 75ms linear;
+}
+
+.spectrum.is-playing i {
+  min-height: 4px;
+}
+
+.spectrum:not(.is-playing) i {
+  height: 0;
+  opacity: 0;
+  transform: scaleY(0);
+  transition: height 2s ease-out, opacity 2s ease-out, transform 2s ease-out;
 }
 
 .readout-clock {
@@ -1226,13 +1237,19 @@ a {
 
 .dock-lyrics {
   width: auto;
+  margin-left: 8px;
   gap: 5px;
   padding: 0 8px;
-  border: 1px solid rgba(190, 200, 210, 0.26);
-  color: #d0d5d8;
+  border: 1px solid #d6bd91;
+  border-radius: 3px;
+  color: #17191b;
+  background: linear-gradient(180deg, #e3cfaa, #b99b69);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.38), 0 1px 4px rgba(0, 0, 0, 0.38);
   font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.04em;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
 }
 
 .dock-lyrics svg {
@@ -1243,9 +1260,9 @@ a {
 }
 
 .dock-lyrics.is-active:not(:disabled) {
-  border-color: #d1b784;
-  color: #e4cfaa;
-  background: rgba(193, 173, 139, 0.12);
+  border-color: #f0d8ad;
+  color: #101214;
+  background: linear-gradient(180deg, #f0d8ad, #c9a873);
 }
 
 .dock-control:disabled,
@@ -1254,10 +1271,16 @@ a {
   cursor: default;
 }
 
+.dock-control.dock-lyrics:not(:disabled) {
+  color: #17191b;
+}
+
 .dock-lyrics:disabled {
-  border-color: rgba(120, 128, 135, 0.22);
-  color: #687078;
-  background: rgba(255, 255, 255, 0.015);
+  border-color: #464c51;
+  color: #747b81;
+  background: linear-gradient(180deg, #25292d, #191c1f);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.035);
+  opacity: 0.68;
 }
 
 .dock-play {
@@ -2274,7 +2297,7 @@ a {
   }
 
   .dock-center {
-    gap: 1px;
+    gap: 6px;
   }
 
   .dock-controls {
@@ -2293,6 +2316,7 @@ a {
 
   .dock-lyrics {
     width: 32px;
+    margin-left: 5px;
     padding: 0;
   }
 
