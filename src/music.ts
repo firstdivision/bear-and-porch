@@ -1,6 +1,6 @@
 import { lyricsByTrackId } from './lyrics'
 
-export type CollectionId = 'stiff-drink' | 'great-escape' | 'workshop'
+export type CollectionId = 'stiff-drink' | 'great-escape' | 'blue' | 'workshop'
 
 export interface Track {
   id: string
@@ -76,6 +76,17 @@ export const collections: MusicCollection[] = [
       makeTrack('great-escape', 'fifty-pounds', 'Fifty Pounds', '13-fifty-pounds.mp3'),
       makeTrack('great-escape', 'coming-home', 'Coming Home', '14-coming-home.mp3'),
       makeTrack('great-escape', 'sunsets-and-prisons', 'Sunsets and Prisons', '15-sunsets-and-prisons.mp3'),
+    ],
+  },
+  {
+    id: 'blue',
+    title: 'Project Blue',
+    description: 'Three rough-cut songs, altogether different from the other projects.',
+    artwork: '/media/artwork/project-blue.jpg',
+    tracks: [
+      makeTrack('blue', 'bimini-road', 'Bimini Road', 'bimini-road.mp3'),
+      makeTrack('blue', 'track-2', 'Track 2', 'track-2.mp3'),
+      makeTrack('blue', 'track-3', 'Track 3', 'track-3.mp3'),
     ],
   },
   {
