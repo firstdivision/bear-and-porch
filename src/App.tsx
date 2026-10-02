@@ -21,9 +21,12 @@ function App() {
   const [shouldPlay, setShouldPlay] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLyricsOpen, setIsLyricsOpen] = useState(false)
+  const [mobileView, setMobileView] = useState<'tracks' | 'playlist'>('tracks')
+  const [addNotice, setAddNotice] = useState<{ count: number; id: number } | null>(null)
   const [playbackError, setPlaybackError] = useState<string | null>(null)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
+  const addNoticeIdRef = useRef(0)
 
   const selectedCollection =
     collections.find(({ id }) => id === selectedCollectionId) ?? collections[0]
@@ -122,6 +125,12 @@ function App() {
     })
   }, [currentTrack, shouldPlay])
 
+  useEffect(() => {
+    if (!addNotice) return
+    const timeout = window.setTimeout(() => setAddNotice(null), 4500)
+    return () => window.clearTimeout(timeout)
+  }, [addNotice])
+
   const startTrack = (track: Track) => {
     setPlaybackError(null)
     prepareAudioAnalyser()
@@ -140,6 +149,7 @@ function App() {
       return [...current, ...tracksToAdd.filter(({ id }) => !currentIds.has(id))]
     })
 
+    setAddNotice({ count: tracksToAdd.length, id: ++addNoticeIdRef.current })
     if (playlist.length === 0) startTrack(tracksToAdd[0])
   }
 
@@ -293,7 +303,7 @@ function App() {
           <div className="readout-clock">{formatTime(currentTime)} <span>/</span> {formatTime(duration)}</div>
         </div>
 
-        <div className="workspace">
+        <div className={`workspace mobile-view-${mobileView}`}>
           <aside className="library-panel" aria-label="Music library">
             <div className="panel-heading">
               <span>LIBRARY</span>
@@ -348,6 +358,28 @@ function App() {
                 <p>{selectedCollection.description}</p>
                 <span className="collection-meta">{selectedCollection.tracks.length} TRACKS <span>·</span> BEAR AND PORCH</span>
               </div>
+            </div>
+            <div className="mobile-view-heading" aria-live="polite">
+              <span>{mobileView === 'tracks' ? 'TRACKS IN THIS COLLECTION' : 'YOUR PLAYLIST'}</span>
+              <span>{mobileView === 'tracks' ? selectedCollection.tracks.length : playlist.length}</span>
+            </div>
+            <div className="mobile-view-switcher" role="group" aria-label="Choose tracks or playlist">
+              <button
+                type="button"
+                className={mobileView === 'tracks' ? 'is-active' : ''}
+                aria-pressed={mobileView === 'tracks'}
+                onClick={() => setMobileView('tracks')}
+              >
+                TRACKS <span>{selectedCollection.tracks.length}</span>
+              </button>
+              <button
+                type="button"
+                className={mobileView === 'playlist' ? 'is-active' : ''}
+                aria-pressed={mobileView === 'playlist'}
+                onClick={() => setMobileView('playlist')}
+              >
+                PLAYLIST <span>{playlist.length}</span>
+              </button>
             </div>
             <div className="collection-toolbar">
               <button className="play-all-button" type="button" onClick={() => playCollection(selectedCollection.id)}>
@@ -441,6 +473,29 @@ function App() {
           <span>{playlist.length} IN PLAYLIST</span>
         </div>
       </main>
+
+      {addNotice && (
+        <div className="playlist-add-notice" role="status">
+          <span>{addNotice.count === 1 ? 'Added to playlist' : `Added ${addNotice.count} tracks to playlist`}</span>
+          <button
+            type="button"
+            onClick={() => {
+              setMobileView('playlist')
+              setAddNotice(null)
+            }}
+          >
+            VIEW PLAYLIST
+          </button>
+          <button
+            className="notice-dismiss"
+            type="button"
+            aria-label="Dismiss playlist notification"
+            onClick={() => setAddNotice(null)}
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       <aside
         className={`lyrics-drawer${isLyricsOpen ? ' is-open' : ''}`}
