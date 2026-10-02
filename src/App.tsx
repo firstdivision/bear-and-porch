@@ -3,6 +3,10 @@ import { collections, type CollectionId, type Track } from './music'
 
 const spotifyUrl = 'https://open.spotify.com/artist/5N4ZHyQxKfgmb8HnYgNFB2'
 const youtubeUrl = 'https://www.youtube.com/channel/UCyh3zc-I0flxBVG5HByjz2A'
+const usesNativeAudioPlayback =
+  typeof navigator !== 'undefined' &&
+  (/iPhone|iPad|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
 const formatTime = (seconds: number) => {
   if (!Number.isFinite(seconds)) return '0:00'
   const minutes = Math.floor(seconds / 60)
@@ -39,6 +43,8 @@ function App() {
     : -1
 
   const prepareAudioAnalyser = () => {
+    if (usesNativeAudioPlayback) return
+
     const audio = audioRef.current
     if (!audio) return
 
@@ -255,6 +261,71 @@ function App() {
     setCurrentTime(value)
   }
 
+  useEffect(() => {
+    if (!('mediaSession' in navigator)) return
+
+    const mediaSession = navigator.mediaSession
+    mediaSession.metadata = currentTrack && typeof MediaMetadata !== 'undefined'
+      ? new MediaMetadata({
+          title: currentTrack.title,
+          artist: 'Bear and Porch',
+          album: currentCollection?.title ?? 'Bear and Porch',
+          artwork: currentCollection?.artwork
+            ? [{
+                src: new URL(currentCollection.artwork, window.location.origin).href,
+                sizes: currentCollection.id === 'stiff-drink' ? '700x377' : '700x400',
+                type: 'image/jpeg',
+              }]
+            : [],
+        })
+      : null
+    mediaSession.playbackState = isPlaying
+      ? 'playing'
+      : currentTrack
+        ? 'paused'
+        : 'none'
+
+    const audio = audioRef.current
+    const actions: Array<[MediaSessionAction, MediaSessionActionHandler]> = [
+      ['play', () => {
+        if (!audio) return
+        prepareAudioAnalyser()
+        void audio.play().catch((error: unknown) => {
+          console.error('Playback could not start from media controls.', error)
+          setPlaybackError('Could not start playback. Try again.')
+        })
+      }],
+      ['pause', () => audio?.pause()],
+      ['nexttrack', () => {
+        if (!currentTrack) return
+        const tracks = playlistRef.current
+        const index = tracks.findIndex(({ id }) => id === currentTrack.id)
+        const nextTrack = tracks[index + 1]
+        if (nextTrack) startTrack(nextTrack)
+        else audio?.pause()
+      }],
+      ['previoustrack', () => {
+        if (!currentTrack) return
+        const tracks = playlistRef.current
+        const index = tracks.findIndex(({ id }) => id === currentTrack.id)
+        const previousTrack = audio && audio.currentTime > 3
+          ? currentTrack
+          : tracks[Math.max(index - 1, 0)]
+        if (previousTrack) startTrack(previousTrack)
+      }],
+    ]
+
+    for (const [action, handler] of actions) {
+      mediaSession.setActionHandler(action, handler)
+    }
+
+    return () => {
+      for (const [action] of actions) {
+        mediaSession.setActionHandler(action, null)
+      }
+    }
+  }, [currentTrack, currentCollection?.title, currentCollection?.artwork, isPlaying, playlist])
+
   return (
     <>
       <a className="skip-link" href="#main">Skip to player</a>
@@ -299,10 +370,10 @@ function App() {
             )}
           </div>
           <div
-            className={`spectrum${isPlaying ? ' is-playing' : ''}`}
+            className={`spectrum${isPlaying ? ' is-playing' : ''}${usesNativeAudioPlayback ? ' spectrum-native' : ''}`}
             ref={spectrumRef}
             role="img"
-            aria-label="Live audio frequency visualizer"
+            aria-label={usesNativeAudioPlayback ? 'Audio visualizer' : 'Live audio frequency visualizer'}
           >
             {Array.from({ length: 64 }, (_, index) => <i key={index} />)}
           </div>

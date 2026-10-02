@@ -1583,6 +1583,41 @@ a {
   opacity: 0.92;
 }
 
+.spectrum-native.is-playing i {
+  height: 68%;
+  animation: native-spectrum-dance 820ms ease-in-out infinite alternate;
+}
+
+.spectrum-native.is-playing i:nth-child(7n + 1) {
+  height: 94%;
+  animation-delay: -650ms;
+}
+
+.spectrum-native.is-playing i:nth-child(7n + 2) {
+  height: 56%;
+  animation-delay: -180ms;
+}
+
+.spectrum-native.is-playing i:nth-child(7n + 3) {
+  height: 78%;
+  animation-delay: -480ms;
+}
+
+.spectrum-native.is-playing i:nth-child(7n + 4) {
+  height: 43%;
+  animation-delay: -720ms;
+}
+
+.spectrum-native.is-playing i:nth-child(7n + 5) {
+  height: 86%;
+  animation-delay: -320ms;
+}
+
+.spectrum-native.is-playing i:nth-child(7n + 6) {
+  height: 62%;
+  animation-delay: -560ms;
+}
+
 .panel-heading,
 .collection-heading,
 .collection-meta,
@@ -1670,6 +1705,11 @@ a {
 
 @keyframes spectrum-dance {
   from { transform: scaleY(0.34); opacity: 0.55; }
+  to { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes native-spectrum-dance {
+  from { transform: scaleY(0.25); opacity: 0.5; }
   to { transform: scaleY(1); opacity: 1; }
 }
 
