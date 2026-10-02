@@ -15,6 +15,7 @@ function App() {
   const analyserRef = useRef<AnalyserNode | null>(null)
   const audioSourceRef = useRef<MediaElementAudioSourceNode | null>(null)
   const spectrumRef = useRef<HTMLDivElement>(null)
+  const playlistRef = useRef<Track[]>([])
   const [selectedCollectionId, setSelectedCollectionId] = useState<CollectionId>('stiff-drink')
   const [playlist, setPlaylist] = useState<Track[]>([])
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null)
@@ -140,17 +141,16 @@ function App() {
   }
 
   const addTracksToPlaylist = (tracks: Track[]) => {
-    const knownIds = new Set(playlist.map(({ id }) => id))
+    const currentPlaylist = playlistRef.current
+    const knownIds = new Set(currentPlaylist.map(({ id }) => id))
     const tracksToAdd = tracks.filter(({ id }) => !knownIds.has(id))
     if (tracksToAdd.length === 0) return
 
-    setPlaylist((current) => {
-      const currentIds = new Set(current.map(({ id }) => id))
-      return [...current, ...tracksToAdd.filter(({ id }) => !currentIds.has(id))]
-    })
+    playlistRef.current = [...currentPlaylist, ...tracksToAdd]
+    setPlaylist(playlistRef.current)
 
     setAddNotice({ count: tracksToAdd.length, id: ++addNoticeIdRef.current })
-    if (playlist.length === 0) startTrack(tracksToAdd[0])
+    if (currentPlaylist.length === 0) startTrack(tracksToAdd[0])
   }
 
   const addTrackToPlaylist = (track: Track) => addTracksToPlaylist([track])
@@ -164,6 +164,7 @@ function App() {
     const collection = collections.find(({ id }) => id === collectionId)
     if (!collection) return
     setSelectedCollectionId(collectionId)
+    playlistRef.current = collection.tracks
     setPlaylist(collection.tracks)
     setPlaybackError(null)
     prepareAudioAnalyser()
@@ -219,7 +220,8 @@ function App() {
   }
 
   const removeTrackFromPlaylist = (track: Track, index: number) => {
-    const nextPlaylist = playlist.filter((_, itemIndex) => itemIndex !== index)
+    const nextPlaylist = playlistRef.current.filter((_, itemIndex) => itemIndex !== index)
+    playlistRef.current = nextPlaylist
     setPlaylist(nextPlaylist)
     if (currentTrack?.id !== track.id) return
 
@@ -235,6 +237,7 @@ function App() {
 
   const clearPlaylist = () => {
     audioRef.current?.pause()
+    playlistRef.current = []
     setPlaylist([])
     setCurrentTrack(null)
     setShouldPlay(false)
