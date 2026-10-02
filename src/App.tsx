@@ -156,7 +156,10 @@ function App() {
   const addTrackToPlaylist = (track: Track) => addTracksToPlaylist([track])
 
   const playTrack = (track: Track) => {
-    addTrackToPlaylist(track)
+    if (!playlistRef.current.some(({ id }) => id === track.id)) {
+      addTrackToPlaylist(track)
+      return
+    }
     startTrack(track)
   }
 
