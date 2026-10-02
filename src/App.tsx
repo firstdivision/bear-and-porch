@@ -531,7 +531,12 @@ function App() {
         </div>
         <div className="dock-center">
           <div className="dock-controls">
-            <button type="button" className="dock-control" onClick={playPrevious} disabled={!currentTrack} aria-label="Previous track">|◀</button>
+            <button type="button" className="dock-control" onClick={playPrevious} disabled={!currentTrack} aria-label="Previous track">
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M16 4v12L7 10z" />
+                <path d="M3 4h2v12H3z" />
+              </svg>
+            </button>
             <button type="button" className="dock-play" onClick={togglePlayback} disabled={!currentTrack && playlist.length === 0} aria-label={isPlaying ? 'Pause' : 'Play'}>
               {isPlaying ? (
                 <svg viewBox="0 0 16 16" aria-hidden="true">
@@ -544,7 +549,12 @@ function App() {
                 </svg>
               )}
             </button>
-            <button type="button" className="dock-control" onClick={playNext} disabled={!currentTrack} aria-label="Next track">▶|</button>
+            <button type="button" className="dock-control" onClick={playNext} disabled={!currentTrack} aria-label="Next track">
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M4 4v12l9-6z" />
+                <path d="M15 4h2v12h-2z" />
+              </svg>
+            </button>
           </div>
           <div className="seek-row">
             <span>{formatTime(currentTime)}</span>
