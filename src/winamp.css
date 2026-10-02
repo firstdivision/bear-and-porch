@@ -344,19 +344,27 @@ a {
   width: 100%;
   height: 49px;
   align-items: end;
-  gap: 1px;
+  gap: 2px;
   padding: 5px 2px;
-  border: 1px solid rgba(201, 169, 128, 0.12);
-  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(201, 169, 128, 0.2);
+  background:
+    linear-gradient(0deg, rgba(105, 59, 10, 0.12), transparent 72%),
+    rgba(0, 0, 0, 0.42);
 }
 
 .spectrum i {
   min-width: 0;
   flex: 1 1 0;
   height: var(--bar, 8%);
-  min-height: 3px;
-  background: linear-gradient(0deg, #626c73, #aeb6bb 72%, #e0e4e6);
-  opacity: 0.7;
+  min-height: 4px;
+  background:
+    repeating-linear-gradient(
+      to top,
+      transparent 0 4px,
+      rgba(10, 9, 7, 0.92) 4px 6px
+    ),
+    linear-gradient(to top, #65400f 0%, #a96814 42%, #d99421 74%, #f6ce78 100%);
+  opacity: 0.88;
   transform-origin: bottom;
   transition: height 75ms linear;
 }
@@ -1572,7 +1580,7 @@ a {
 }
 
 .spectrum i {
-  opacity: 0.82;
+  opacity: 0.92;
 }
 
 .panel-heading,
