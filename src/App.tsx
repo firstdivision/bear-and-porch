@@ -138,6 +138,10 @@ function App() {
     return () => window.clearTimeout(timeout)
   }, [addNotice])
 
+  useEffect(() => {
+    if (!currentTrack?.lyrics) setIsLyricsOpen(false)
+  }, [currentTrack])
+
   const startTrack = (track: Track) => {
     setPlaybackError(null)
     prepareAudioAnalyser()
@@ -360,18 +364,6 @@ function App() {
             <span className="readout-label">NOW PLAYING</span>
             <strong>{currentTrack?.title ?? 'Select a track from the library'}</strong>
             <span>{currentCollection?.title ?? 'BEAR AND PORCH'}</span>
-            {currentTrack?.lyrics && (
-              <button
-                className={`lyrics-action${isLyricsOpen ? ' is-active' : ''}`}
-                type="button"
-                aria-pressed={isLyricsOpen}
-                aria-expanded={isLyricsOpen}
-                aria-controls="lyrics-panel"
-                onClick={() => setIsLyricsOpen((open) => !open)}
-              >
-                {isLyricsOpen ? 'CLOSE LYRICS' : 'VIEW LYRICS'}
-              </button>
-            )}
           </div>
           <div
             className={`spectrum${isPlaying ? ' is-playing' : ''}${usesNativeAudioPlayback ? ' spectrum-native' : ''}`}
@@ -635,6 +627,22 @@ function App() {
                 <path d="M4 4v12l9-6z" />
                 <path d="M15 4h2v12h-2z" />
               </svg>
+            </button>
+            <button
+              type="button"
+              className={`dock-control dock-lyrics${isLyricsOpen ? ' is-active' : ''}`}
+              onClick={() => setIsLyricsOpen((open) => !open)}
+              disabled={!currentTrack?.lyrics}
+              aria-label={isLyricsOpen ? 'Close lyrics' : 'View lyrics'}
+              aria-pressed={isLyricsOpen}
+              aria-expanded={isLyricsOpen}
+              aria-controls="lyrics-panel"
+              title={currentTrack?.lyrics ? (isLyricsOpen ? 'Close lyrics' : 'View lyrics') : 'Lyrics unavailable'}
+            >
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M4 5h12M4 10h12M4 15h8" />
+              </svg>
+              <span>LYRICS</span>
             </button>
           </div>
           <div className="seek-row">

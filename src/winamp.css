@@ -1211,10 +1211,40 @@ a {
   fill: currentColor;
 }
 
+.dock-lyrics {
+  width: auto;
+  gap: 5px;
+  padding: 0 8px;
+  border: 1px solid rgba(190, 200, 210, 0.26);
+  color: #d0d5d8;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.04em;
+}
+
+.dock-lyrics svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.7;
+}
+
+.dock-lyrics.is-active:not(:disabled) {
+  border-color: #d1b784;
+  color: #e4cfaa;
+  background: rgba(193, 173, 139, 0.12);
+}
+
 .dock-control:disabled,
 .dock-play:disabled {
   color: #625646;
   cursor: default;
+}
+
+.dock-lyrics:disabled {
+  border-color: rgba(120, 128, 135, 0.22);
+  color: #687078;
+  background: rgba(255, 255, 255, 0.015);
 }
 
 .dock-play {
@@ -2228,13 +2258,31 @@ a {
   }
 
   .dock-control {
+    width: 32px;
+    height: 36px;
+  }
+
+  .dock-control svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .dock-lyrics {
+    width: 32px;
+    padding: 0;
+  }
+
+  .dock-lyrics span {
+    display: none;
+  }
+
+  .dock-play {
     width: 36px;
     height: 36px;
   }
 
-  .dock-play {
-    width: 38px;
-    height: 38px;
+  .dock-controls {
+    gap: 5px;
   }
 
   .seek-row {
