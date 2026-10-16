@@ -1,13 +1,17 @@
 # Bear and Porch
 
-A responsive, dark, Winamp-inspired music site for Bear and Porch. It is a client-side React application built with TypeScript and Vite, deployed to GitHub Pages at [bearandporch.com](https://bearandporch.com/).
+A responsive music site for Bear and Porch with an album-focused homepage and a separate classic Winamp-inspired player at [/winamp/](https://bearandporch.com/winamp/). It is built with React, TypeScript, and Vite, deployed to GitHub Pages at [bearandporch.com](https://bearandporch.com/).
 
 The site provides four music collections: Stiff Drink, The Great Escape, Project Blue, and Workshop. Visitors can browse tracks, build and edit a playlist, play songs in the fixed player dock, view available lyrics, and follow the band's Spotify and YouTube pages. It intentionally does not include bios, contact information, or purchase links.
 
 ## Features and behavior
 
+- The homepage displays every collection with cover art, a description, and a playable track list. Selecting a song starts it immediately and queues its collection; selecting the current song toggles pause/play. **Play collection** starts the collection from the beginning.
+- Both pages share audio playback, seeking, lyrics, and Media Session integration. The homepage uses native HTML audio without the classic visualizer.
+- The classic player is linked from the homepage, with an **Albums** link back. These are separate page loads; playback and queues reset when navigating between them.
+- Both `/` and `/winamp/` are built as real HTML entry points, so direct links and refreshes work on GitHub Pages without a client-side routing fallback.
 - Responsive collection browsing and player controls, including mobile layouts.
-- Tracks can be added individually or as a whole collection. Selecting a track in the library adds it to the queue; it starts immediately only if the queue was empty. Adding more tracks does not interrupt playback.
+- In the classic player, tracks can be added individually or as a whole collection. Selecting a track in the library adds it to the queue; it starts immediately only if the queue was empty. Adding more tracks does not interrupt playback.
 - The explicit Play control on a queued track switches playback to that track. Selecting **Play Collection** replaces the queue with that collection and starts its first track.
 - The player dock provides play/pause, previous/next, seeking, and a lyrics control that is disabled when the current track has no lyrics.
 - Lyrics are displayed in a drawer and keyed by track ID.
@@ -19,6 +23,10 @@ The site provides four music collections: Stiff Drink, The Great Escape, Project
 | Path | Purpose |
 | --- | --- |
 | `src/App.tsx` | Player UI, playlist behavior, HTML audio, EQ, lyrics, and Media Session integration |
+| `src/BandHome.tsx` | Album-focused homepage and playable track lists |
+| `src/band.css` | Homepage styling and shared-player light theme |
+| `src/main.tsx`, `src/winamp.tsx` | Homepage and classic-player entry points |
+| `index.html`, `winamp/index.html` | Static page entries for direct GitHub Pages navigation |
 | `src/music.ts` | Typed collection and track catalog, including media paths and artwork |
 | `src/lyrics.ts` | Lyrics indexed by track ID (`collection-id:track-id`) |
 | `src/winamp.css` | Player styling, responsive layouts, and visualizer animations |

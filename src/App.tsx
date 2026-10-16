@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { collections, type CollectionId, type MusicCollection, type Track } from './music'
+import BandHome from './BandHome'
 
 const spotifyUrl = 'https://open.spotify.com/artist/5N4ZHyQxKfgmb8HnYgNFB2'
 const youtubeUrl = 'https://www.youtube.com/channel/UCyh3zc-I0flxBVG5HByjz2A'
@@ -39,7 +40,7 @@ const updateMediaMetadata = (
     : null
 }
 
-function App() {
+function App({ classic = false }: { classic?: boolean }) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const audioContextRef = useRef<AudioContext | null>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
@@ -69,7 +70,7 @@ function App() {
     : -1
 
   const prepareAudioAnalyser = () => {
-    if (usesNativeAudioPlayback) return
+    if (!classic || usesNativeAudioPlayback) return
 
     const audio = audioRef.current
     if (!audio) return
@@ -166,6 +167,7 @@ function App() {
 
   useEffect(() => {
     if (!currentTrack?.lyrics) setIsLyricsOpen(false)
+    setDuration(0)
   }, [currentTrack])
 
   const startTrack = (track: Track) => {
@@ -210,6 +212,16 @@ function App() {
     setCurrentTrack(collection.tracks[0] ?? null)
     setShouldPlay(Boolean(collection.tracks[0]))
     setCurrentTime(0)
+  }
+
+  const playAlbumTrack = (collection: MusicCollection, track: Track) => {
+    if (currentTrack?.id === track.id) {
+      togglePlayback()
+      return
+    }
+    playlistRef.current = collection.tracks
+    setPlaylist(collection.tracks)
+    startTrack(track)
   }
 
   const playNext = () => {
@@ -345,14 +357,26 @@ function App() {
 
   return (
     <>
+      {!classic ? (
+        <BandHome
+          currentTrack={currentTrack}
+          isPlaying={isPlaying}
+          onPlayCollection={playCollection}
+          onPlayTrack={playAlbumTrack}
+          spotifyUrl={spotifyUrl}
+          youtubeUrl={youtubeUrl}
+        />
+      ) : (
+      <>
       <a className="skip-link" href="#main">Skip to player</a>
       <header className="site-header">
-        <a className="wordmark" href="#main" aria-label="Bear and Porch player home">
+        <a className="wordmark" href="/" aria-label="Bear and Porch home">
           <span className="wordmark-mark" aria-hidden="true">B/P</span>
           <span>BEAR <span className="wordmark-and">&</span> PORCH</span>
         </a>
         <div className="header-center">ARTIST <span>◆</span> BEAR AND PORCH</div>
         <div className="header-links">
+          <a href="/">ALBUMS</a>
           <a href={spotifyUrl} target="_blank" rel="noreferrer">SPOTIFY ↗</a>
           <a href={youtubeUrl} target="_blank" rel="noreferrer">YOUTUBE ↗</a>
         </div>
@@ -555,8 +579,10 @@ function App() {
           <span>{playlist.length} IN PLAYLIST</span>
         </div>
       </main>
+      </>
+      )}
 
-      {addNotice && (
+      {classic && addNotice && (
         <div className="playlist-add-notice" role="status">
           <span>{addNotice.count === 1 ? 'Added to playlist' : `Added ${addNotice.count} tracks to playlist`}</span>
           <button
@@ -578,6 +604,8 @@ function App() {
           </button>
         </div>
       )}
+
+      {playbackError && <div className="playback-error" role="alert">{playbackError}</div>}
 
       <aside
         className={`lyrics-drawer${isLyricsOpen ? ' is-open' : ''}`}
@@ -605,6 +633,10 @@ function App() {
             updateMediaMetadata(currentTrack, currentCollection)
           }}
           onPause={() => setIsPlaying(false)}
+          onError={() => {
+            setIsPlaying(false)
+            setPlaybackError('Could not load this track. Try again or select another song.')
+          }}
           onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
           onLoadedMetadata={(event) => setDuration(event.currentTarget.duration)}
           onDurationChange={(event) => setDuration(event.currentTarget.duration)}
