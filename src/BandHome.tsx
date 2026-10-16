@@ -23,8 +23,7 @@ export default function BandHome({
       <header className="band-header">
         <a className="band-wordmark" href="/" aria-label="Bear and Porch home">BEAR <span>&</span> PORCH</a>
         <nav aria-label="Main navigation">
-          <a href="#music">The music</a>
-          <a href="/winamp/">Winamp player <span aria-hidden="true">&rarr;</span></a>
+          <a href="/winamp/">Bear Play <span aria-hidden="true">&rarr;</span></a>
         </nav>
       </header>
 
@@ -88,7 +87,7 @@ export default function BandHome({
       <footer className="band-footer">
         <a className="band-wordmark" href="/">BEAR <span>&</span> PORCH</a>
         <p>Thanks for listening.</p>
-        <a href="/winamp/">Feeling nostalgic? Open the Winamp player <span aria-hidden="true">&rarr;</span></a>
+        <a href="/winamp/">Feeling nostalgic? Open Bear Play <span aria-hidden="true">&rarr;</span></a>
       </footer>
     </>
   )
