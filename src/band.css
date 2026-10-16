@@ -56,6 +56,69 @@ body.band-site {
   padding: 70px 0 56px;
 }
 
+.bear-play-nav {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 18px;
+  background: var(--tan);
+  color: var(--paper);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.band-header .bear-play-nav:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.bear-play-invitation {
+  margin-top: 30px;
+}
+
+.bear-play-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 84px;
+  padding: 18px 24px;
+  background: var(--tan);
+  color: var(--paper);
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.bear-play-cta:hover {
+  background: var(--ink);
+}
+
+.bear-play-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+.bear-play-cta small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.bear-play-invitation p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
 .band-eyebrow {
   margin: 0;
   color: var(--muted);
@@ -348,6 +411,13 @@ body.band-site {
 
   .band-header nav {
     gap: 20px;
+  }
+
+  .bear-play-cta {
+    display: flex;
+    gap: 16px;
+    padding: 18px;
+    font-size: 19px;
   }
 
   .band-intro {

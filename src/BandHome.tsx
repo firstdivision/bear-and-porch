@@ -23,7 +23,7 @@ export default function BandHome({
       <header className="band-header">
         <a className="band-wordmark" href="/" aria-label="Bear and Porch home">BEAR <span>&</span> PORCH</a>
         <nav aria-label="Main navigation">
-          <a href="/winamp/">Bear Play <span aria-hidden="true">&rarr;</span></a>
+          <a className="bear-play-nav" href="/winamp/">Bear Play <span aria-hidden="true">&rarr;</span></a>
         </nav>
       </header>
 
@@ -32,6 +32,14 @@ export default function BandHome({
           <p className="band-eyebrow">RECORDS / ROUGH CUTS / EVERYTHING IN BETWEEN</p>
           <h1 id="band-title">Bear and Porch<span>Pull up a chair. Put on a record.</span></h1>
           <p>A few records, some unfinished corners, and songs that found their own way.</p>
+          <div className="bear-play-invitation">
+            <a className="bear-play-cta" href="/winamp/">
+              <span className="bear-play-icon" aria-hidden="true">&#9654;</span>
+              <span>Open Bear Play<small>Our classic music player</small></span>
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <p>All the music. Your own playlist. A little nostalgia.</p>
+          </div>
           <div className="band-socials">
             <a href={spotifyUrl} target="_blank" rel="noreferrer">Listen on Spotify <span aria-hidden="true">&#8599;</span></a>
             <a href={youtubeUrl} target="_blank" rel="noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span></a>
