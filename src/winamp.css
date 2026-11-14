@@ -760,7 +760,7 @@ a {
 .track-table-header {
   display: grid;
   min-height: 32px;
-  grid-template-columns: 37px minmax(0, 1fr) 52px 32px;
+  grid-template-columns: 37px minmax(0, 1fr) 52px 44px 32px;
   align-items: center;
   padding: 0 13px;
   border-bottom: 1px solid rgba(201, 169, 128, 0.14);
@@ -771,7 +771,8 @@ a {
 }
 
 .track-table-header span:nth-child(3),
-.track-table-header span:nth-child(4) {
+.track-table-header span:nth-child(4),
+.track-table-header span:nth-child(5) {
   text-align: center;
 }
 
@@ -785,7 +786,7 @@ a {
 .library-track {
   display: grid;
   min-height: 48px;
-  grid-template-columns: 37px minmax(0, 1fr) 52px 32px;
+  grid-template-columns: 37px minmax(0, 1fr) 52px 44px 32px;
   align-items: center;
   padding: 0 13px;
   border-bottom: 1px solid rgba(201, 169, 128, 0.075);
@@ -862,6 +863,35 @@ a {
 
 .no-lyrics {
   color: #61584c;
+}
+
+.download-track-button {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  justify-self: center;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: #a89578;
+  transition: color 130ms ease, border-color 130ms ease, background 130ms ease;
+}
+
+.download-track-button svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.download-track-button:hover,
+.download-track-button:focus-visible {
+  border-color: #b08e62;
+  color: #16110b;
+  background: var(--tan);
 }
 
 .add-track-button,
@@ -2190,14 +2220,14 @@ a {
 
   .track-table-header {
     min-height: 28px;
-    grid-template-columns: 29px minmax(0, 1fr) 42px 27px;
+    grid-template-columns: 29px minmax(0, 1fr) 42px 29px 27px;
     padding: 0 8px;
     font-size: 6px;
   }
 
   .library-track {
     min-height: 47px;
-    grid-template-columns: 29px minmax(0, 1fr) 42px 27px;
+    grid-template-columns: 29px minmax(0, 1fr) 42px 29px 27px;
     padding: 0 8px;
   }
 
@@ -2211,6 +2241,11 @@ a {
   }
 
   .add-track-button {
+    width: 23px;
+    height: 23px;
+  }
+
+  .download-track-button {
     width: 23px;
     height: 23px;
   }

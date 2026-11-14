@@ -82,6 +82,11 @@ export default function BandHome({
                           <span className="album-track-title">{track.title}</span>
                           {isCurrent && <span className="album-track-status">{playing ? 'PLAYING' : 'PAUSED'}</span>}
                         </button>
+                        <a className="album-track-download" href={track.src} download aria-label={`Download ${track.title}`} title={`Download ${track.title}`}>
+                          <svg viewBox="0 0 16 16" aria-hidden="true">
+                            <path d="M8 1.75v8.5m-3.25-3.25L8 10.25l3.25-3.25M2.5 11.25v2.5h11v-2.5" />
+                          </svg>
+                        </a>
                       </li>
                     )
                   })}

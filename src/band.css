@@ -262,12 +262,15 @@ body.band-site {
 }
 
 .album-tracks li {
+  display: flex;
+  align-items: stretch;
   border-bottom: 1px solid var(--line);
 }
 
 .album-tracks button {
   display: flex;
-  width: 100%;
+  min-width: 0;
+  flex: 1;
   align-items: center;
   text-align: left;
   gap: 12px;
@@ -283,6 +286,31 @@ body.band-site {
 .album-tracks .is-current {
   background: #e6e4d9;
   color: var(--tan);
+}
+
+.album-track-download {
+  display: grid;
+  width: 40px;
+  flex-shrink: 0;
+  place-items: center;
+  color: var(--muted);
+  transition: color 140ms ease, background 140ms ease;
+}
+
+.album-track-download svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.album-track-download:hover,
+.album-track-download:focus-visible {
+  color: var(--tan);
+  background: #e6e4d9;
 }
 
 .album-track-number {

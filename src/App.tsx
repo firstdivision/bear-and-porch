@@ -502,6 +502,7 @@ function App({ classic = false }: { classic?: boolean }) {
                 <span>#</span>
                 <span>TITLE</span>
                 <span>LYRICS</span>
+                <span>DOWNLOAD</span>
                 <span>ADD</span>
               </div>
               <ol className="library-track-list" aria-label={`${selectedCollection.title} tracks`}>
@@ -518,6 +519,17 @@ function App({ classic = false }: { classic?: boolean }) {
                       {track.lyrics
                         ? <span className="has-lyrics" title="Lyrics available">LYRICS</span>
                         : <span className="no-lyrics">—</span>}
+                      <a
+                        className="download-track-button"
+                        href={track.src}
+                        download
+                        aria-label={`Download ${track.title}`}
+                        title={`Download ${track.title}`}
+                      >
+                        <svg viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="M8 1.75v8.5m-3.25-3.25L8 10.25l3.25-3.25M2.5 11.25v2.5h11v-2.5" />
+                        </svg>
+                      </a>
                       <button
                         className="add-track-button"
                         type="button"
